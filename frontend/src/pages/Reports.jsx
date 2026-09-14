@@ -33,7 +33,7 @@ export default function Reports() {
 
       <div className="panel">
         <div className="panel-body">
-          <table>
+          <table className="responsive-table">
             <thead>
               <tr>
                 <th>Report</th>
@@ -44,9 +44,9 @@ export default function Reports() {
             <tbody>
               {REPORTS.map((r) => (
                 <tr key={r.href}>
-                  <td>{r.title}</td>
-                  <td>{r.description}</td>
-                  <td>
+                  <td data-label="Report">{r.title}</td>
+                  <td data-label="Description">{r.description}</td>
+                  <td data-label="">
                     <div className="cell-actions">
                       <a className="btn btn-sm" href={r.href} download>
                         Download

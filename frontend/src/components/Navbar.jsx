@@ -1,4 +1,5 @@
-import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 
 const icon = {
   dashboard: (
@@ -43,28 +44,66 @@ const links = [
 ];
 
 export default function Navbar() {
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
+
+  // Close the drawer any time the route changes (e.g. after tapping a link).
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
+
+  // Prevent background scroll while the mobile drawer is open.
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
-    <aside className="sidebar">
-      <div className="sidebar-brand">
-        <div className="sidebar-brand-mark">SR</div>
-        <div>
+    <>
+      <header className="topbar">
+        <button
+          className="hamburger"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          onClick={() => setOpen((o) => !o)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+        <div className="sidebar-brand">
+          <div className="sidebar-brand-mark">SR</div>
           <div className="sidebar-brand-name">Stockroom</div>
-          <div className="sidebar-brand-sub">Inventory control</div>
         </div>
-      </div>
-      <nav className="sidebar-nav">
-        {links.map((link) => (
-          <NavLink
-            key={link.to}
-            to={link.to}
-            end={link.end}
-            className={({ isActive }) => `sidebar-link${isActive ? " active" : ""}`}
-          >
-            {icon[link.key]}
-            {link.label}
-          </NavLink>
-        ))}
-      </nav>
-    </aside>
+      </header>
+
+      {open && <div className="sidebar-backdrop" onClick={() => setOpen(false)} />}
+
+      <aside className={`sidebar${open ? " open" : ""}`}>
+        <div className="sidebar-brand">
+          <div className="sidebar-brand-mark">SR</div>
+          <div>
+            <div className="sidebar-brand-name">Stockroom</div>
+            <div className="sidebar-brand-sub">Inventory control</div>
+          </div>
+        </div>
+        <nav className="sidebar-nav">
+          {links.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              end={link.end}
+              className={({ isActive }) => `sidebar-link${isActive ? " active" : ""}`}
+              onClick={() => setOpen(false)}
+            >
+              {icon[link.key]}
+              {link.label}
+            </NavLink>
+          ))}
+        </nav>
+      </aside>
+    </>
   );
 }

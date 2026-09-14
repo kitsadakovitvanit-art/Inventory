@@ -78,7 +78,7 @@ export default function PurchaseOrders() {
           ) : orders.length === 0 ? (
             <p className="empty-state">No purchase orders yet.</p>
           ) : (
-            <table>
+            <table className="responsive-table">
               <thead>
                 <tr>
                   <th>PO Number</th>
@@ -96,17 +96,17 @@ export default function PurchaseOrders() {
                   return (
                     <Fragment key={po.id}>
                       <tr style={{ cursor: "pointer" }} onClick={() => setExpandedId(isOpen ? null : po.id)}>
-                        <td className="cell-mono">{po.po_number}</td>
-                        <td>{po.supplier_name || "—"}</td>
-                        <td>
+                        <td className="cell-mono" data-label="PO Number">{po.po_number}</td>
+                        <td data-label="Supplier">{po.supplier_name || "—"}</td>
+                        <td data-label="Status">
                           <span className="status">
                             <span className={`status-dot ${meta.dot}`} />
                             {meta.label}
                           </span>
                         </td>
-                        <td>{new Date(po.order_date).toLocaleDateString()}</td>
-                        <td className="cell-mono">${po.total_amount.toFixed(2)}</td>
-                        <td>
+                        <td data-label="Order date">{new Date(po.order_date).toLocaleDateString()}</td>
+                        <td className="cell-mono" data-label="Total">${po.total_amount.toFixed(2)}</td>
+                        <td data-label="">
                           <div className="cell-actions">
                             {po.status === "ordered" && (
                               <button
@@ -124,8 +124,8 @@ export default function PurchaseOrders() {
                       </tr>
                       {isOpen && (
                         <tr>
-                          <td colSpan={6} style={{ background: "var(--bg)" }}>
-                            <table>
+                          <td colSpan={6} className="cell-expand" style={{ background: "var(--bg)" }} data-label="">
+                            <table className="responsive-table">
                               <thead>
                                 <tr>
                                   <th>SKU</th>
@@ -138,11 +138,11 @@ export default function PurchaseOrders() {
                               <tbody>
                                 {po.items.map((item) => (
                                   <tr key={item.id}>
-                                    <td className="cell-mono">{item.sku}</td>
-                                    <td>{item.product_name}</td>
-                                    <td className="cell-mono">{item.quantity}</td>
-                                    <td className="cell-mono">${item.unit_cost.toFixed(2)}</td>
-                                    <td className="cell-mono">${(item.quantity * item.unit_cost).toFixed(2)}</td>
+                                    <td className="cell-mono" data-label="SKU">{item.sku}</td>
+                                    <td data-label="Product">{item.product_name}</td>
+                                    <td className="cell-mono" data-label="Qty">{item.quantity}</td>
+                                    <td className="cell-mono" data-label="Unit cost">${item.unit_cost.toFixed(2)}</td>
+                                    <td className="cell-mono" data-label="Line total">${(item.quantity * item.unit_cost).toFixed(2)}</td>
                                   </tr>
                                 ))}
                               </tbody>

@@ -96,7 +96,7 @@ export default function Dashboard() {
           {lowStock.length === 0 ? (
             <p className="empty-state">Everything is above threshold.</p>
           ) : (
-            <table>
+            <table className="responsive-table">
               <thead>
                 <tr>
                   <th>SKU</th>
@@ -109,11 +109,11 @@ export default function Dashboard() {
               <tbody>
                 {lowStock.map((p) => (
                   <tr key={p.id} className="row-low-stock">
-                    <td className="cell-mono">{p.sku}</td>
-                    <td>{p.name}</td>
-                    <td className="cell-mono">{p.quantity}</td>
-                    <td className="cell-mono">{p.low_stock_threshold}</td>
-                    <td>{p.supplier_name || "—"}</td>
+                    <td className="cell-mono" data-label="SKU">{p.sku}</td>
+                    <td data-label="Product">{p.name}</td>
+                    <td className="cell-mono" data-label="Quantity">{p.quantity}</td>
+                    <td className="cell-mono" data-label="Threshold">{p.low_stock_threshold}</td>
+                    <td data-label="Supplier">{p.supplier_name || "—"}</td>
                   </tr>
                 ))}
               </tbody>

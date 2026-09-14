@@ -132,7 +132,7 @@ export default function Products() {
           ) : products.length === 0 ? (
             <p className="empty-state">No products match that search.</p>
           ) : (
-            <table>
+            <table className="responsive-table">
               <thead>
                 <tr>
                   <th>SKU</th>
@@ -147,13 +147,13 @@ export default function Products() {
               <tbody>
                 {products.map((p) => (
                   <tr key={p.id} className={p.quantity <= p.low_stock_threshold ? "row-low-stock" : ""}>
-                    <td className="cell-mono">{p.sku}</td>
-                    <td>{p.name}</td>
-                    <td>{p.category || "—"}</td>
-                    <td className="cell-mono">{p.quantity}</td>
-                    <td className="cell-mono">${p.unit_price.toFixed(2)}</td>
-                    <td>{p.supplier_name || "—"}</td>
-                    <td>
+                    <td className="cell-mono" data-label="SKU">{p.sku}</td>
+                    <td data-label="Name">{p.name}</td>
+                    <td data-label="Category">{p.category || "—"}</td>
+                    <td className="cell-mono" data-label="Quantity">{p.quantity}</td>
+                    <td className="cell-mono" data-label="Unit price">${p.unit_price.toFixed(2)}</td>
+                    <td data-label="Supplier">{p.supplier_name || "—"}</td>
+                    <td data-label="">
                       <div className="cell-actions">
                         <button className="btn btn-sm" onClick={() => setAdjustingProduct(p)}>
                           Adjust

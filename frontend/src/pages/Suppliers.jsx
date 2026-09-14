@@ -72,7 +72,7 @@ export default function Suppliers() {
           ) : suppliers.length === 0 ? (
             <p className="empty-state">No suppliers yet.</p>
           ) : (
-            <table>
+            <table className="responsive-table">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -86,12 +86,12 @@ export default function Suppliers() {
               <tbody>
                 {suppliers.map((s) => (
                   <tr key={s.id}>
-                    <td>{s.name}</td>
-                    <td>{s.contact_name || "—"}</td>
-                    <td>{s.email || "—"}</td>
-                    <td>{s.phone || "—"}</td>
-                    <td className="cell-mono">{s.product_count}</td>
-                    <td>
+                    <td data-label="Name">{s.name}</td>
+                    <td data-label="Contact">{s.contact_name || "—"}</td>
+                    <td data-label="Email">{s.email || "—"}</td>
+                    <td data-label="Phone">{s.phone || "—"}</td>
+                    <td className="cell-mono" data-label="Products">{s.product_count}</td>
+                    <td data-label="">
                       <div className="cell-actions">
                         <button
                           className="btn btn-sm"
