@@ -379,12 +379,14 @@ label {
 
 .panel-body {
   padding: 6px 18px 14px;
+  overflow-x: auto;
 }
 
 /* ---------- Tables ---------- */
 
 table {
   width: 100%;
+  min-width: 560px;
   border-collapse: collapse;
   font-size: 13.5px;
 }
@@ -681,5 +683,61 @@ tbody tr:hover {
   }
   .field-row {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .main {
+    padding: 14px;
+  }
+  .page-header {
+    align-items: flex-start;
+  }
+  .page-header h1 {
+    font-size: 19px;
+  }
+  .stat-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+  }
+  .stat-value {
+    font-size: 22px;
+  }
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .toolbar .search {
+    min-width: 0;
+  }
+  .toolbar .btn {
+    justify-content: center;
+  }
+  .cell-actions {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  .modal-backdrop {
+    padding: 0;
+    align-items: flex-end;
+  }
+  .modal {
+    max-width: 100%;
+    max-height: 92vh;
+    border-radius: 16px 16px 0 0;
+  }
+  .line-item-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 10px;
+  }
+  .line-item-remove {
+    justify-self: flex-end;
+  }
+  .toast {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    max-width: none;
   }
 }
