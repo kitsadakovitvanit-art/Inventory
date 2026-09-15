@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 import { API_ROOT } from "../api.js";
 
-=======
->>>>>>> f9ccc0d289b7bc5ca12fefe348e752eabaf795b5
 const REPORTS = [
   {
     title: "Full inventory — CSV",
@@ -53,11 +50,7 @@ export default function Reports() {
                   <td data-label="Description">{r.description}</td>
                   <td data-label="">
                     <div className="cell-actions">
-<<<<<<< HEAD
                       <a className="btn btn-sm" href={`${API_ROOT}${r.href}`} download>
-=======
-                      <a className="btn btn-sm" href={r.href} download>
->>>>>>> f9ccc0d289b7bc5ca12fefe348e752eabaf795b5
                         Download
                       </a>
                     </div>
