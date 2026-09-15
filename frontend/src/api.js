@@ -2,7 +2,11 @@
 // which Vite's dev server proxies to the local backend (see vite.config.js).
 // In production, set VITE_API_URL to your deployed backend's URL, e.g.
 // https://your-backend.onrender.com
+<<<<<<< HEAD
 export const API_ROOT = (import.meta.env.VITE_API_URL || "").replace(/\/+$/, "");
+=======
+const API_ROOT = (import.meta.env.VITE_API_URL || "").replace(/\/+$/, "");
+>>>>>>> f9ccc0d289b7bc5ca12fefe348e752eabaf795b5
 const BASE = `${API_ROOT}/api`;
 
 async function request(path, options = {}) {
