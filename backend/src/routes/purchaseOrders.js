@@ -51,6 +51,34 @@ export function purchaseOrdersRouter(io) {
     if (!supplier_id || !Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ error: "supplier_id and at least one item are required" });
     }
+
+    const supplier = db.prepare("SELECT id, name FROM suppliers WHERE id = ?").get(supplier_id);
+    if (!supplier) return res.status(400).json({ error: "Supplier not found" });
+
+    // A purchase order is placed with one supplier, so every line item must be a
+    // product that supplier actually sells. The client filters the dropdown, but
+    // the rule is enforced here too — the API is reachable without the UI.
+    const productIds = items.map((i) => Number(i.product_id));
+    if (productIds.some((id) => !Number.isInteger(id) || id <= 0)) {
+      return res.status(400).json({ error: "Every line item needs a valid product_id" });
+    }
+    const placeholders = productIds.map(() => "?").join(",");
+    const foundProducts = db
+      .prepare(`SELECT id, name, supplier_id FROM products WHERE id IN (${placeholders})`)
+      .all(...productIds);
+    const byId = new Map(foundProducts.map((p) => [p.id, p]));
+    for (const id of productIds) {
+      const product = byId.get(id);
+      if (!product) {
+        return res.status(400).json({ error: `Product ${id} not found` });
+      }
+      if (Number(product.supplier_id) !== Number(supplier_id)) {
+        return res
+          .status(400)
+          .json({ error: `"${product.name}" is not supplied by ${supplier.name}` });
+      }
+    }
+
     const po_number = nextPoNumber();
     const tx = db.transaction(() => {
       const result = db.prepare(`
