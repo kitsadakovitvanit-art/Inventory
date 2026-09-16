@@ -14,7 +14,7 @@ export default function BarcodeScanner({ onDetected }) {
     readerRef.current = reader;
     let cancelled = false;
 
-    reader
+    BrowserMultiFormatReader
       .listVideoInputDevices()
       .then((devices) => {
         if (cancelled) return;
